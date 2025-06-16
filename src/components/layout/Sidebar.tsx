@@ -138,12 +138,12 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   return (
     <div
       className={cn(
-        "relative flex flex-col h-screen bg-white transition-all duration-300",
+        "relative flex flex-col h-screen bg-white border-r border-gray-200 transition-all duration-300",
         isCollapsed ? "w-20" : "w-64",
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-gray-200">
+      <div className="flex items-center justify-between p-6 border-b border-gray-200 h-[73px] flex-shrink-0">
         {!isCollapsed && (
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -165,7 +165,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       </div>
 
       {/* User Profile */}
-      <div className="p-6 border-b border-gray-200">
+      <div className="p-6 border-b border-gray-200 flex-shrink-0">
         <div className="flex items-center space-x-3">
           <Avatar className="w-10 h-10">
             <AvatarImage src="/placeholder.svg" alt="Mritunjay Pandey" />

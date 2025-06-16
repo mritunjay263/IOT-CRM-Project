@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export function Header() {
   return (
-    <header className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200">
+    <header className="flex items-center justify-between px-6 py-6 bg-white border-b border-gray-200 h-[73px]">
       {/* Search */}
       <div className="flex-1 max-w-lg">
         <div className="relative">
@@ -32,9 +32,9 @@ export function Header() {
         {/* User Profile */}
         <div className="flex items-center space-x-3">
           <Avatar className="w-8 h-8">
-            <AvatarImage src="/placeholder.svg" alt="Sierra Ferguson" />
+            <AvatarImage src="/placeholder.svg" alt="Mritunjay Pandey" />
             <AvatarFallback className="bg-primary text-white text-sm">
-              SF
+              MP
             </AvatarFallback>
           </Avatar>
         </div>
