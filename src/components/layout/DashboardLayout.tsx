@@ -14,11 +14,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar isCollapsed={isSidebarCollapsed} onToggle={toggleSidebar} />
-      <div className="flex-1 flex flex-col overflow-hidden border-l border-gray-200">
+      <div className="flex-1 flex flex-col min-h-screen border-l border-gray-200">
         <Header />
-        <main className="flex-1 overflow-y-auto bg-gray-50">{children}</main>
+        <main className="flex-1 overflow-y-auto bg-gray-50 min-h-0">
+          {children}
+        </main>
       </div>
     </div>
   );

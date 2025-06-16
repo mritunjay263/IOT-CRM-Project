@@ -7,14 +7,14 @@ import { EnhancedTasksProgress } from "@/components/dashboard/EnhancedTasksProgr
 
 export default function Dashboard() {
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 min-h-full">
       {/* Top Section - Full Width */}
       <div className="w-full">
         <ProgressWidget />
       </div>
 
       {/* Main Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 flex-1">
         {/* Left Side - Activities & System Health (60%) */}
         <div className="lg:col-span-3 space-y-6">
           <TaskList />

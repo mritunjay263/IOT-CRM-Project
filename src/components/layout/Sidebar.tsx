@@ -111,10 +111,7 @@ const navigationItems: NavigationItem[] = [
 
 export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   const location = useLocation();
-  const [expandedItems, setExpandedItems] = useState<string[]>([
-    "Devices",
-    "Settings",
-  ]);
+  const [expandedItems, setExpandedItems] = useState<string[]>(["Devices"]);
 
   const toggleExpanded = (itemName: string) => {
     if (isCollapsed) return;
@@ -138,7 +135,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   return (
     <div
       className={cn(
-        "relative flex flex-col h-screen bg-white border-r border-gray-200 transition-all duration-300",
+        "relative flex flex-col min-h-screen bg-white border-r border-gray-200 transition-all duration-300",
         isCollapsed ? "w-20" : "w-64",
       )}
     >
