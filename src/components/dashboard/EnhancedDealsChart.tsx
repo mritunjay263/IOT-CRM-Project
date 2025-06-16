@@ -30,22 +30,20 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export function EnhancedDealsChart() {
   return (
-    <Card className="bg-white border-0 shadow-sm h-full">
+    <Card className="bg-white border border-gray-200 shadow-sm h-full">
       <CardHeader className="flex flex-row items-center justify-between pb-3">
         <CardTitle className="text-lg font-semibold text-gray-900">
           Deals
         </CardTitle>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-primary"></div>
-            <span className="text-sm text-gray-600">Closed deals</span>
-          </div>
-          <button className="text-sm text-primary hover:text-primary/80">
-            Show: Monthly
-          </button>
-        </div>
+        <button className="text-sm text-primary hover:text-primary/80">
+          Show: Monthly
+        </button>
       </CardHeader>
       <CardContent className="p-6 pt-0">
+        <div className="flex items-center space-x-2 mb-4">
+          <div className="w-3 h-3 rounded-full bg-primary"></div>
+          <span className="text-sm text-gray-600">Closed deals</span>
+        </div>
         <div className="h-48">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={data}>
