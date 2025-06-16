@@ -118,7 +118,10 @@ const navigationItems: NavigationItem[] = [
 
 export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   const location = useLocation();
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [expandedItems, setExpandedItems] = useState<string[]>([
+    "Tasks",
+    "Email",
+  ]);
 
   const toggleExpanded = (itemName: string) => {
     if (isCollapsed) return;
@@ -191,7 +194,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-4 space-y-1">
+      <nav className="flex-1 px-4 py-4 space-y-2">
         {navigationItems.map((item) => {
           const isActive = isItemActive(item.href);
           const hasSubItems = item.subItems && item.subItems.length > 0;
@@ -204,32 +207,40 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 className={cn(
                   "flex items-center justify-between group rounded-lg transition-all duration-200",
                   isActive
-                    ? "bg-primary/10 border border-primary/20"
-                    : "hover:bg-gray-50 border border-transparent",
+                    ? "bg-primary text-white"
+                    : "text-gray-700 hover:bg-gray-50",
                 )}
               >
                 <Link
                   to={item.href}
                   className={cn(
                     "flex items-center flex-1 px-3 py-2.5 text-sm font-medium transition-colors",
-                    isActive ? "text-primary" : "text-gray-700",
                     isCollapsed && "justify-center",
                   )}
                 >
                   <item.icon
-                    className={cn("w-5 h-5", !isCollapsed && "mr-3")}
+                    className={cn(
+                      "w-5 h-5",
+                      !isCollapsed && "mr-3",
+                      isActive ? "text-white" : "text-gray-500",
+                    )}
                   />
                   {!isCollapsed && <span>{item.name}</span>}
                 </Link>
                 {hasSubItems && !isCollapsed && (
                   <button
                     onClick={() => toggleExpanded(item.name)}
-                    className="p-2 rounded-md hover:bg-gray-100 transition-colors"
+                    className={cn(
+                      "p-1 rounded-md transition-colors mr-2",
+                      isActive
+                        ? "hover:bg-white/20 text-white"
+                        : "hover:bg-gray-100 text-gray-500",
+                    )}
                   >
                     {isExpanded ? (
-                      <ChevronUp className="w-4 h-4 text-gray-500" />
+                      <ChevronUp className="w-4 h-4" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-gray-500" />
+                      <ChevronDown className="w-4 h-4" />
                     )}
                   </button>
                 )}
@@ -237,7 +248,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
 
               {/* Sub Items */}
               {hasSubItems && !isCollapsed && isExpanded && (
-                <div className="ml-4 space-y-1 border-l border-gray-200 pl-4">
+                <div className="ml-6 space-y-1">
                   {item.subItems?.map((subItem) => {
                     const isSubActive = location.pathname === subItem.href;
                     return (
@@ -254,7 +265,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                         {subItem.icon && (
                           <subItem.icon
                             className={cn(
-                              "w-3 h-3 mr-2",
+                              "w-3 h-3 mr-3 fill-current",
                               subItem.color || "text-gray-400",
                             )}
                           />
@@ -274,17 +285,19 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       <div className="p-4 border-t border-gray-200">
         <div
           className={cn(
-            "flex items-center justify-between group rounded-lg transition-all duration-200 hover:bg-gray-50 border border-transparent",
+            "flex items-center justify-between group rounded-lg transition-all duration-200 text-gray-700 hover:bg-gray-50",
           )}
         >
           <Link
             to="/settings"
             className={cn(
-              "flex items-center flex-1 px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors",
+              "flex items-center flex-1 px-3 py-2.5 text-sm font-medium transition-colors",
               isCollapsed && "justify-center",
             )}
           >
-            <Settings className={cn("w-5 h-5", !isCollapsed && "mr-3")} />
+            <Settings
+              className={cn("w-5 h-5 text-gray-500", !isCollapsed && "mr-3")}
+            />
             {!isCollapsed && <span>Settings</span>}
           </Link>
         </div>
@@ -295,7 +308,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
         <div className="p-4 border-t border-gray-200">
           <button
             onClick={onToggle}
-            className="flex items-center w-full px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+            className="flex items-center w-full px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors rounded-lg hover:bg-gray-50"
           >
             <ChevronLeft className="w-4 h-4 mr-2" />
             <span>Toggle sidebar</span>
