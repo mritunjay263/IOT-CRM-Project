@@ -145,7 +145,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   return (
     <div
       className={cn(
-        "relative flex flex-col h-screen bg-white border-2 border-primary/30 rounded-lg m-2 transition-all duration-300",
+        "relative flex flex-col h-screen bg-white transition-all duration-300",
         isCollapsed ? "w-20" : "w-64",
       )}
     >
@@ -205,10 +205,10 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
               {/* Main Item */}
               <div
                 className={cn(
-                  "flex items-center justify-between group rounded-lg transition-all duration-200",
+                  "flex items-center justify-between group transition-all duration-200",
                   isActive
-                    ? "bg-primary text-white"
-                    : "text-gray-700 hover:bg-gray-50",
+                    ? "text-primary"
+                    : "text-gray-700 hover:text-gray-900",
                 )}
               >
                 <Link
@@ -222,7 +222,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                     className={cn(
                       "w-5 h-5",
                       !isCollapsed && "mr-3",
-                      isActive ? "text-white" : "text-gray-500",
+                      isActive ? "text-primary" : "text-gray-500",
                     )}
                   />
                   {!isCollapsed && <span>{item.name}</span>}
@@ -230,12 +230,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 {hasSubItems && !isCollapsed && (
                   <button
                     onClick={() => toggleExpanded(item.name)}
-                    className={cn(
-                      "p-1 rounded-md transition-colors mr-2",
-                      isActive
-                        ? "hover:bg-white/20 text-white"
-                        : "hover:bg-gray-100 text-gray-500",
-                    )}
+                    className="p-1 rounded-md transition-colors mr-2 hover:bg-gray-100 text-gray-500"
                   >
                     {isExpanded ? (
                       <ChevronUp className="w-4 h-4" />
@@ -256,10 +251,10 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                         key={subItem.name}
                         to={subItem.href}
                         className={cn(
-                          "flex items-center px-3 py-2 text-sm rounded-md transition-colors",
+                          "flex items-center px-3 py-2 text-sm transition-colors",
                           isSubActive
-                            ? "bg-primary/10 text-primary font-medium"
-                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+                            ? "text-primary font-medium"
+                            : "text-gray-600 hover:text-gray-900",
                         )}
                       >
                         {subItem.icon && (

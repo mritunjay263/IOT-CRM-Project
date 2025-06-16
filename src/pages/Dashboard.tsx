@@ -2,8 +2,8 @@ import React from "react";
 import { ProgressWidget } from "@/components/dashboard/ProgressWidget";
 import { CalendarWidget } from "@/components/dashboard/CalendarWidget";
 import { TaskList } from "@/components/dashboard/TaskList";
-import { DealsChart } from "@/components/dashboard/DealsChart";
-import { TasksProgress } from "@/components/dashboard/TasksProgress";
+import { EnhancedDealsChart } from "@/components/dashboard/EnhancedDealsChart";
+import { EnhancedTasksProgress } from "@/components/dashboard/EnhancedTasksProgress";
 
 export default function Dashboard() {
   return (
@@ -27,8 +27,8 @@ export default function Dashboard() {
 
         {/* Right Side - Charts */}
         <div className="space-y-6">
-          <DealsChart />
-          <TasksProgress />
+          <EnhancedDealsChart />
+          <EnhancedTasksProgress />
         </div>
       </div>
     </div>
