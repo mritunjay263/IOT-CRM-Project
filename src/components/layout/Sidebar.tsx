@@ -10,6 +10,12 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
+  Circle,
+  Archive,
+  Send,
+  Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -19,7 +25,19 @@ interface SidebarProps {
   onToggle: () => void;
 }
 
-const navigationItems = [
+interface NavigationItem {
+  name: string;
+  href: string;
+  icon: React.ComponentType<any>;
+  subItems?: {
+    name: string;
+    href: string;
+    icon?: React.ComponentType<any>;
+    color?: string;
+  }[];
+}
+
+const navigationItems: NavigationItem[] = [
   {
     name: "Dashboard",
     href: "/",
@@ -29,11 +47,57 @@ const navigationItems = [
     name: "Tasks",
     href: "/tasks",
     icon: CheckSquare,
+    subItems: [
+      {
+        name: "Active",
+        href: "/tasks/active",
+        icon: Circle,
+        color: "text-blue-500",
+      },
+      {
+        name: "Completed",
+        href: "/tasks/completed",
+        icon: Circle,
+        color: "text-green-500",
+      },
+      {
+        name: "Failed",
+        href: "/tasks/failed",
+        icon: Circle,
+        color: "text-red-500",
+      },
+    ],
   },
   {
     name: "Email",
     href: "/email",
     icon: Mail,
+    subItems: [
+      {
+        name: "Draft",
+        href: "/email/draft",
+        icon: Circle,
+        color: "text-yellow-500",
+      },
+      {
+        name: "Scheduled",
+        href: "/email/scheduled",
+        icon: Circle,
+        color: "text-blue-500",
+      },
+      {
+        name: "Sent",
+        href: "/email/sent",
+        icon: Circle,
+        color: "text-green-500",
+      },
+      {
+        name: "Archived",
+        href: "/email/archived",
+        icon: Circle,
+        color: "text-gray-500",
+      },
+    ],
   },
   {
     name: "Contacts",
@@ -54,6 +118,26 @@ const navigationItems = [
 
 export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   const location = useLocation();
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+
+  const toggleExpanded = (itemName: string) => {
+    if (isCollapsed) return;
+    setExpandedItems((prev) =>
+      prev.includes(itemName)
+        ? prev.filter((item) => item !== itemName)
+        : [...prev, itemName],
+    );
+  };
+
+  const isItemActive = (href: string) => {
+    return (
+      location.pathname === href || location.pathname.startsWith(href + "/")
+    );
+  };
+
+  const isItemExpanded = (itemName: string) => {
+    return expandedItems.includes(itemName);
+  };
 
   return (
     <div
@@ -107,41 +191,117 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-4 py-4 space-y-1">
         {navigationItems.map((item) => {
-          const isActive = location.pathname === item.href;
+          const isActive = isItemActive(item.href);
+          const hasSubItems = item.subItems && item.subItems.length > 0;
+          const isExpanded = isItemExpanded(item.name);
+
           return (
-            <Link
-              key={item.name}
-              to={item.href}
-              className={cn(
-                "flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
-                isActive
-                  ? "bg-primary text-white"
-                  : "text-gray-700 hover:bg-gray-100",
-                isCollapsed && "justify-center",
+            <div key={item.name} className="space-y-1">
+              {/* Main Item */}
+              <div
+                className={cn(
+                  "flex items-center justify-between group rounded-lg transition-all duration-200",
+                  isActive
+                    ? "bg-primary/10 border border-primary/20"
+                    : "hover:bg-gray-50 border border-transparent",
+                )}
+              >
+                <Link
+                  to={item.href}
+                  className={cn(
+                    "flex items-center flex-1 px-3 py-2.5 text-sm font-medium transition-colors",
+                    isActive ? "text-primary" : "text-gray-700",
+                    isCollapsed && "justify-center",
+                  )}
+                >
+                  <item.icon
+                    className={cn("w-5 h-5", !isCollapsed && "mr-3")}
+                  />
+                  {!isCollapsed && <span>{item.name}</span>}
+                </Link>
+                {hasSubItems && !isCollapsed && (
+                  <button
+                    onClick={() => toggleExpanded(item.name)}
+                    className="p-2 rounded-md hover:bg-gray-100 transition-colors"
+                  >
+                    {isExpanded ? (
+                      <ChevronUp className="w-4 h-4 text-gray-500" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-gray-500" />
+                    )}
+                  </button>
+                )}
+              </div>
+
+              {/* Sub Items */}
+              {hasSubItems && !isCollapsed && isExpanded && (
+                <div className="ml-4 space-y-1 border-l border-gray-200 pl-4">
+                  {item.subItems?.map((subItem) => {
+                    const isSubActive = location.pathname === subItem.href;
+                    return (
+                      <Link
+                        key={subItem.name}
+                        to={subItem.href}
+                        className={cn(
+                          "flex items-center px-3 py-2 text-sm rounded-md transition-colors",
+                          isSubActive
+                            ? "bg-primary/10 text-primary font-medium"
+                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+                        )}
+                      >
+                        {subItem.icon && (
+                          <subItem.icon
+                            className={cn(
+                              "w-3 h-3 mr-2",
+                              subItem.color || "text-gray-400",
+                            )}
+                          />
+                        )}
+                        <span>{subItem.name}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
               )}
-            >
-              <item.icon className={cn("w-5 h-5", !isCollapsed && "mr-3")} />
-              {!isCollapsed && <span>{item.name}</span>}
-            </Link>
+            </div>
           );
         })}
       </nav>
 
       {/* Settings */}
-      <div className="p-3 border-t border-gray-200">
-        <Link
-          to="/settings"
+      <div className="p-4 border-t border-gray-200">
+        <div
           className={cn(
-            "flex items-center px-3 py-2.5 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors",
-            isCollapsed && "justify-center",
+            "flex items-center justify-between group rounded-lg transition-all duration-200 hover:bg-gray-50 border border-transparent",
           )}
         >
-          <Settings className={cn("w-5 h-5", !isCollapsed && "mr-3")} />
-          {!isCollapsed && <span>Settings</span>}
-        </Link>
+          <Link
+            to="/settings"
+            className={cn(
+              "flex items-center flex-1 px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors",
+              isCollapsed && "justify-center",
+            )}
+          >
+            <Settings className={cn("w-5 h-5", !isCollapsed && "mr-3")} />
+            {!isCollapsed && <span>Settings</span>}
+          </Link>
+        </div>
       </div>
+
+      {/* Toggle Sidebar Button */}
+      {!isCollapsed && (
+        <div className="p-4 border-t border-gray-200">
+          <button
+            onClick={onToggle}
+            className="flex items-center w-full px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            <ChevronLeft className="w-4 h-4 mr-2" />
+            <span>Toggle sidebar</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
