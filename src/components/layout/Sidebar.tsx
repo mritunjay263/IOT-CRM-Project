@@ -145,7 +145,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   return (
     <div
       className={cn(
-        "relative flex flex-col h-screen bg-white border-r border-gray-200 transition-all duration-300",
+        "relative flex flex-col h-screen bg-white border-2 border-primary/30 rounded-lg m-2 transition-all duration-300",
         isCollapsed ? "w-20" : "w-64",
       )}
     >
