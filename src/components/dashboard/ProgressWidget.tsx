@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function ProgressWidget() {
+  const [timeRange, setTimeRange] = useState("week");
   const memoryUsed = 6.4;
   const totalMemory = 8.0;
   const percentage = (memoryUsed / totalMemory) * 100;
@@ -15,9 +23,17 @@ export function ProgressWidget() {
             <h3 className="text-lg font-semibold text-gray-900">
               Device Memory Utilization: {memoryUsed}GB / {totalMemory}GB
             </h3>
-            <button className="text-sm text-primary hover:underline">
-              Show this week
-            </button>
+            <Select value={timeRange} onValueChange={setTimeRange}>
+              <SelectTrigger className="w-32 text-sm">
+                <SelectValue placeholder="Select period" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="today">Today</SelectItem>
+                <SelectItem value="week">This Week</SelectItem>
+                <SelectItem value="month">This Month</SelectItem>
+                <SelectItem value="year">This Year</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <Progress value={percentage} className="h-2" />
         </div>

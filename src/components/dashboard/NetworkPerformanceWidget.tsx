@@ -8,41 +8,42 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  AreaChart,
-  Area,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
 
-const data = [
-  { name: "1 Dec", value: 50 },
-  { name: "8 Dec", value: 100 },
-  { name: "16 Dec", value: 160 },
-  { name: "24 Dec", value: 80 },
-  { name: "31 Dec", value: 146 },
+const networkData = [
+  { time: "00:00", latency: 45, throughput: 85, packets: 1200 },
+  { time: "04:00", latency: 38, throughput: 92, packets: 1350 },
+  { time: "08:00", latency: 52, throughput: 78, packets: 1100 },
+  { time: "12:00", latency: 41, throughput: 88, packets: 1280 },
+  { time: "16:00", latency: 35, throughput: 95, packets: 1450 },
+  { time: "20:00", latency: 48, throughput: 82, packets: 1180 },
 ];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-gray-800 text-white px-3 py-2 rounded-lg shadow-lg">
-        <p className="text-sm font-medium">{payload[0].value}</p>
+        <p className="text-sm font-medium">{`${label}: ${payload[0].value}ms`}</p>
       </div>
     );
   }
   return null;
 };
 
-export function EnhancedDealsChart() {
-  const [timeRange, setTimeRange] = useState("month");
+export function NetworkPerformanceWidget() {
+  const [timeRange, setTimeRange] = useState("today");
 
   return (
     <Card className="bg-white border border-gray-200 shadow-sm h-80 w-full">
       <CardHeader className="flex flex-row items-center justify-between pb-3">
         <CardTitle className="text-lg font-semibold text-gray-900">
-          Deals
+          Network Performance
         </CardTitle>
         <Select value={timeRange} onValueChange={setTimeRange}>
           <SelectTrigger className="w-32 text-sm">
@@ -58,20 +59,14 @@ export function EnhancedDealsChart() {
       </CardHeader>
       <CardContent className="p-6 pt-0">
         <div className="flex items-center space-x-2 mb-4">
-          <div className="w-3 h-3 rounded-full bg-primary"></div>
-          <span className="text-sm text-gray-600">Closed deals</span>
+          <div className="w-3 h-3 rounded-full bg-purple-500"></div>
+          <span className="text-sm text-gray-600">Average Latency (ms)</span>
         </div>
         <div className="h-36">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data}>
-              <defs>
-                <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
-                </linearGradient>
-              </defs>
+            <LineChart data={networkData}>
               <XAxis
-                dataKey="name"
+                dataKey="time"
                 axisLine={false}
                 tickLine={false}
                 tick={{ fontSize: 12, fill: "#6B7280" }}
@@ -80,20 +75,18 @@ export function EnhancedDealsChart() {
                 axisLine={false}
                 tickLine={false}
                 tick={{ fontSize: 12, fill: "#6B7280" }}
-                domain={[0, 200]}
-                ticks={[0, 50, 100, 150, 200]}
+                domain={[0, 80]}
               />
               <Tooltip content={<CustomTooltip />} />
-              <Area
+              <Line
                 type="monotone"
-                dataKey="value"
-                stroke="#3B82F6"
+                dataKey="latency"
+                stroke="#8B5CF6"
                 strokeWidth={2}
-                fill="url(#colorValue)"
-                dot={{ fill: "#3B82F6", strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6, fill: "#3B82F6" }}
+                dot={{ fill: "#8B5CF6", strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6, fill: "#8B5CF6" }}
               />
-            </AreaChart>
+            </LineChart>
           </ResponsiveContainer>
         </div>
       </CardContent>
