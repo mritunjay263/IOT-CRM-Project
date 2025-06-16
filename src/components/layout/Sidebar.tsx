@@ -2,20 +2,28 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
-  CheckSquare,
-  Mail,
   Users,
-  MessageCircle,
-  TrendingUp,
+  Smartphone,
+  Shield,
   Settings,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
   ChevronUp,
   Circle,
-  Archive,
-  Send,
-  Zap,
+  BarChart3,
+  UserPlus,
+  Bell,
+  Wifi,
+  Database,
+  Key,
+  Mail,
+  MessageCircle,
+  Smartphone as Phone,
+  Lock,
+  RotateCcw,
+  FileText,
+  Activity,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -44,83 +52,161 @@ const navigationItems: NavigationItem[] = [
     icon: LayoutDashboard,
   },
   {
-    name: "Tasks",
-    href: "/tasks",
-    icon: CheckSquare,
+    name: "Clients",
+    href: "/clients",
+    icon: Users,
     subItems: [
       {
-        name: "Active",
-        href: "/tasks/active",
+        name: "All Clients",
+        href: "/clients/all",
         icon: Circle,
         color: "text-blue-500",
       },
       {
-        name: "Completed",
-        href: "/tasks/completed",
+        name: "Active",
+        href: "/clients/active",
         icon: Circle,
         color: "text-green-500",
       },
       {
-        name: "Failed",
-        href: "/tasks/failed",
+        name: "Inactive",
+        href: "/clients/inactive",
         icon: Circle,
-        color: "text-red-500",
+        color: "text-gray-500",
+      },
+      {
+        name: "Add Client",
+        href: "/clients/add",
+        icon: UserPlus,
+        color: "text-primary",
       },
     ],
   },
   {
-    name: "Email",
-    href: "/email",
-    icon: Mail,
+    name: "Devices",
+    href: "/devices",
+    icon: Smartphone,
     subItems: [
       {
-        name: "Draft",
-        href: "/email/draft",
+        name: "All Devices",
+        href: "/devices/all",
+        icon: Circle,
+        color: "text-blue-500",
+      },
+      {
+        name: "Online",
+        href: "/devices/online",
+        icon: Circle,
+        color: "text-green-500",
+      },
+      {
+        name: "Offline",
+        href: "/devices/offline",
+        icon: Circle,
+        color: "text-red-500",
+      },
+      {
+        name: "Maintenance",
+        href: "/devices/maintenance",
+        icon: Circle,
+        color: "text-yellow-500",
+      },
+    ],
+  },
+  {
+    name: "License Management",
+    href: "/licenses",
+    icon: Shield,
+    subItems: [
+      {
+        name: "Generate License",
+        href: "/licenses/generate",
+        icon: Key,
+        color: "text-green-500",
+      },
+      {
+        name: "Active Licenses",
+        href: "/licenses/active",
+        icon: Circle,
+        color: "text-green-500",
+      },
+      {
+        name: "Expired",
+        href: "/licenses/expired",
+        icon: Circle,
+        color: "text-red-500",
+      },
+      {
+        name: "Pending",
+        href: "/licenses/pending",
+        icon: Circle,
+        color: "text-yellow-500",
+      },
+    ],
+  },
+  {
+    name: "Analytics & Reports",
+    href: "/analytics",
+    icon: BarChart3,
+    subItems: [
+      {
+        name: "Device Performance",
+        href: "/analytics/devices",
+        icon: Activity,
+        color: "text-blue-500",
+      },
+      {
+        name: "Usage Reports",
+        href: "/analytics/usage",
+        icon: FileText,
+        color: "text-green-500",
+      },
+      {
+        name: "Client Analytics",
+        href: "/analytics/clients",
+        icon: Users,
+        color: "text-purple-500",
+      },
+    ],
+  },
+  {
+    name: "Notifications",
+    href: "/notifications",
+    icon: Bell,
+    subItems: [
+      {
+        name: "Device Alerts",
+        href: "/notifications/devices",
+        icon: Circle,
+        color: "text-red-500",
+      },
+      {
+        name: "System Alerts",
+        href: "/notifications/system",
         icon: Circle,
         color: "text-yellow-500",
       },
       {
-        name: "Scheduled",
-        href: "/email/scheduled",
+        name: "Client Notifications",
+        href: "/notifications/clients",
         icon: Circle,
         color: "text-blue-500",
-      },
-      {
-        name: "Sent",
-        href: "/email/sent",
-        icon: Circle,
-        color: "text-green-500",
-      },
-      {
-        name: "Archived",
-        href: "/email/archived",
-        icon: Circle,
-        color: "text-gray-500",
       },
     ],
   },
   {
-    name: "Contacts",
-    href: "/contacts",
-    icon: Users,
-  },
-  {
-    name: "Chat",
-    href: "/chat",
-    icon: MessageCircle,
-  },
-  {
-    name: "Deals",
-    href: "/deals",
-    icon: TrendingUp,
+    name: "Data Monitoring",
+    href: "/monitoring",
+    icon: Database,
   },
 ];
 
 export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<string[]>([
-    "Tasks",
-    "Email",
+    "Clients",
+    "Devices",
+    "Settings",
   ]);
 
   const toggleExpanded = (itemName: string) => {
@@ -154,9 +240,9 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
         {!isCollapsed && (
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">S</span>
+              <Wifi className="w-4 h-4 text-white" />
             </div>
-            <span className="font-semibold text-gray-900">SaaS Kit</span>
+            <span className="font-semibold text-gray-900">IoT Control Hub</span>
           </div>
         )}
         <button
@@ -278,23 +364,96 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
 
       {/* Settings */}
       <div className="p-4 border-t border-gray-200">
-        <div
-          className={cn(
-            "flex items-center justify-between group rounded-lg transition-all duration-200 text-gray-700 hover:bg-gray-50",
-          )}
-        >
-          <Link
-            to="/settings"
+        <div className="space-y-1">
+          <div
             className={cn(
-              "flex items-center flex-1 px-3 py-2.5 text-sm font-medium transition-colors",
-              isCollapsed && "justify-center",
+              "flex items-center justify-between group transition-all duration-200",
+              location.pathname.startsWith("/settings")
+                ? "text-primary"
+                : "text-gray-700 hover:text-gray-900",
             )}
           >
-            <Settings
-              className={cn("w-5 h-5 text-gray-500", !isCollapsed && "mr-3")}
-            />
-            {!isCollapsed && <span>Settings</span>}
-          </Link>
+            <Link
+              to="/settings"
+              className={cn(
+                "flex items-center flex-1 px-3 py-2.5 text-sm font-medium transition-colors",
+                isCollapsed && "justify-center",
+              )}
+            >
+              <Settings
+                className={cn("w-5 h-5 text-gray-500", !isCollapsed && "mr-3")}
+              />
+              {!isCollapsed && <span>Settings</span>}
+            </Link>
+            {!isCollapsed && (
+              <button
+                onClick={() => toggleExpanded("Settings")}
+                className="p-1 rounded-md transition-colors mr-2 hover:bg-gray-100 text-gray-500"
+              >
+                {isItemExpanded("Settings") ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" />
+                )}
+              </button>
+            )}
+          </div>
+
+          {/* Settings Sub Items */}
+          {!isCollapsed && isItemExpanded("Settings") && (
+            <div className="ml-6 space-y-1">
+              {[
+                {
+                  name: "Email Configuration",
+                  href: "/settings/email",
+                  icon: Mail,
+                },
+                {
+                  name: "WhatsApp Configuration",
+                  href: "/settings/whatsapp",
+                  icon: MessageCircle,
+                },
+                {
+                  name: "SMS Configuration",
+                  href: "/settings/sms",
+                  icon: Phone,
+                },
+                {
+                  name: "Security Settings",
+                  href: "/settings/security",
+                  icon: Lock,
+                },
+                { name: "API Keys", href: "/settings/api", icon: Key },
+                {
+                  name: "Backup & Restore",
+                  href: "/settings/backup",
+                  icon: RotateCcw,
+                },
+                {
+                  name: "System Preferences",
+                  href: "/settings/system",
+                  icon: Settings,
+                },
+              ].map((subItem) => {
+                const isSubActive = location.pathname === subItem.href;
+                return (
+                  <Link
+                    key={subItem.name}
+                    to={subItem.href}
+                    className={cn(
+                      "flex items-center px-3 py-2 text-sm transition-colors",
+                      isSubActive
+                        ? "text-primary font-medium"
+                        : "text-gray-600 hover:text-gray-900",
+                    )}
+                  >
+                    <subItem.icon className="w-3 h-3 mr-3 text-gray-400" />
+                    <span>{subItem.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
