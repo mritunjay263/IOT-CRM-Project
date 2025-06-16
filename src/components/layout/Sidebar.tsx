@@ -55,32 +55,6 @@ const navigationItems: NavigationItem[] = [
     name: "Clients",
     href: "/clients",
     icon: Users,
-    subItems: [
-      {
-        name: "All Clients",
-        href: "/clients/all",
-        icon: Circle,
-        color: "text-blue-500",
-      },
-      {
-        name: "Active",
-        href: "/clients/active",
-        icon: Circle,
-        color: "text-green-500",
-      },
-      {
-        name: "Inactive",
-        href: "/clients/inactive",
-        icon: Circle,
-        color: "text-gray-500",
-      },
-      {
-        name: "Add Client",
-        href: "/clients/add",
-        icon: UserPlus,
-        color: "text-primary",
-      },
-    ],
   },
   {
     name: "Devices",
@@ -117,82 +91,16 @@ const navigationItems: NavigationItem[] = [
     name: "License Management",
     href: "/licenses",
     icon: Shield,
-    subItems: [
-      {
-        name: "Generate License",
-        href: "/licenses/generate",
-        icon: Key,
-        color: "text-green-500",
-      },
-      {
-        name: "Active Licenses",
-        href: "/licenses/active",
-        icon: Circle,
-        color: "text-green-500",
-      },
-      {
-        name: "Expired",
-        href: "/licenses/expired",
-        icon: Circle,
-        color: "text-red-500",
-      },
-      {
-        name: "Pending",
-        href: "/licenses/pending",
-        icon: Circle,
-        color: "text-yellow-500",
-      },
-    ],
   },
   {
     name: "Analytics & Reports",
     href: "/analytics",
     icon: BarChart3,
-    subItems: [
-      {
-        name: "Device Performance",
-        href: "/analytics/devices",
-        icon: Activity,
-        color: "text-blue-500",
-      },
-      {
-        name: "Usage Reports",
-        href: "/analytics/usage",
-        icon: FileText,
-        color: "text-green-500",
-      },
-      {
-        name: "Client Analytics",
-        href: "/analytics/clients",
-        icon: Users,
-        color: "text-purple-500",
-      },
-    ],
   },
   {
     name: "Notifications",
     href: "/notifications",
     icon: Bell,
-    subItems: [
-      {
-        name: "Device Alerts",
-        href: "/notifications/devices",
-        icon: Circle,
-        color: "text-red-500",
-      },
-      {
-        name: "System Alerts",
-        href: "/notifications/system",
-        icon: Circle,
-        color: "text-yellow-500",
-      },
-      {
-        name: "Client Notifications",
-        href: "/notifications/clients",
-        icon: Circle,
-        color: "text-blue-500",
-      },
-    ],
   },
   {
     name: "Data Monitoring",
@@ -204,7 +112,6 @@ const navigationItems: NavigationItem[] = [
 export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<string[]>([
-    "Clients",
     "Devices",
     "Settings",
   ]);
@@ -261,18 +168,18 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
           <Avatar className="w-10 h-10">
-            <AvatarImage src="/placeholder.svg" alt="Sierra Ferguson" />
+            <AvatarImage src="/placeholder.svg" alt="Mritunjay Pandey" />
             <AvatarFallback className="bg-primary text-white">
-              SF
+              MP
             </AvatarFallback>
           </Avatar>
           {!isCollapsed && (
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900 truncate">
-                Sierra Ferguson
+                Mritunjay Pandey
               </p>
               <p className="text-xs text-gray-500 truncate">
-                s.ferguson@gmail.com
+                mritunjay.mailme@gmail.com
               </p>
             </div>
           )}
