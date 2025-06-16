@@ -44,9 +44,9 @@ const tasks = [
 
 export function TaskList() {
   return (
-    <Card className="bg-white border-0 shadow-sm">
-      <CardContent className="p-6">
-        <div className="space-y-4">
+    <Card className="bg-white border border-gray-200 shadow-sm h-80 w-full">
+      <CardContent className="p-6 h-full flex flex-col">
+        <div className="flex-1 space-y-4 overflow-y-auto">
           {tasks.map((task) => (
             <div
               key={task.id}
@@ -95,7 +95,7 @@ export function TaskList() {
             </div>
           ))}
         </div>
-        <div className="pt-4">
+        <div className="pt-4 border-t border-gray-100">
           <button className="text-sm text-primary hover:underline">
             Show more
           </button>

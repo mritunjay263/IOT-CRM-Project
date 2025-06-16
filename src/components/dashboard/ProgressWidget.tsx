@@ -8,8 +8,8 @@ export function ProgressWidget() {
   const percentage = (completed / total) * 100;
 
   return (
-    <Card className="bg-white border-0 shadow-sm">
-      <CardContent className="p-6">
+    <Card className="bg-white border border-gray-200 shadow-sm h-32 w-full">
+      <CardContent className="p-6 h-full flex flex-col justify-center">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900">

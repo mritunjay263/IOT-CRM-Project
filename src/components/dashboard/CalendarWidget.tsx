@@ -8,7 +8,7 @@ export function CalendarWidget() {
   const today = 24; // December 24th
 
   return (
-    <Card className="bg-white border-0 shadow-sm">
+    <Card className="bg-white border border-gray-200 shadow-sm h-32 w-full">
       <CardHeader className="pb-3">
         <CardTitle className="text-lg font-semibold text-gray-900">
           23 December, Sunday

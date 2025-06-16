@@ -16,7 +16,7 @@ const COLORS = {
 
 export function EnhancedTasksProgress() {
   return (
-    <Card className="bg-white border border-gray-200 shadow-sm h-full">
+    <Card className="bg-white border border-gray-200 shadow-sm h-80 w-full">
       <CardHeader className="flex flex-row items-center justify-between pb-3">
         <CardTitle className="text-lg font-semibold text-gray-900">
           Tasks
@@ -25,8 +25,8 @@ export function EnhancedTasksProgress() {
           Show: This month
         </button>
       </CardHeader>
-      <CardContent className="p-6 pt-0">
-        <div className="flex items-center justify-between">
+      <CardContent className="p-6 pt-0 h-52 flex items-center">
+        <div className="flex items-center justify-between w-full">
           {/* Donut Chart */}
           <div className="relative w-32 h-32">
             <ResponsiveContainer width="100%" height="100%">
