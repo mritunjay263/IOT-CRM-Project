@@ -53,9 +53,15 @@ const navigationItems: NavigationItem[] = [
   },
   {
     name: "Clients",
-    href: "/clients",
+    href: "#", // No direct route
     icon: Users,
     subItems: [
+      {
+        name: "Clients",
+        href: "/clients",
+        icon: Users,
+        color: "text-blue-500",
+      },
       {
         name: "Add Client",
         href: "/clients/add",
@@ -66,32 +72,20 @@ const navigationItems: NavigationItem[] = [
   },
   {
     name: "Devices",
-    href: "/devices",
+    href: "#", // No direct route
     icon: Smartphone,
     subItems: [
       {
-        name: "All Devices",
-        href: "/devices/all",
-        icon: Circle,
+        name: "Devices",
+        href: "/devices",
+        icon: Smartphone,
         color: "text-blue-500",
       },
       {
-        name: "Online",
-        href: "/devices/online",
-        icon: Circle,
-        color: "text-green-500",
-      },
-      {
-        name: "Offline",
-        href: "/devices/offline",
-        icon: Circle,
-        color: "text-red-500",
-      },
-      {
-        name: "Maintenance",
-        href: "/devices/maintenance",
-        icon: Circle,
-        color: "text-yellow-500",
+        name: "Add Devices",
+        href: "/devices/add",
+        icon: UserPlus,
+        color: "text-primary",
       },
     ],
   },
@@ -119,24 +113,19 @@ const navigationItems: NavigationItem[] = [
 
 export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   const location = useLocation();
-  const [expandedItems, setExpandedItems] = useState<string[]>([
-    "Clients",
-    "Devices",
-  ]);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   const toggleExpanded = (itemName: string) => {
     if (isCollapsed) return;
     setExpandedItems((prev) =>
       prev.includes(itemName)
         ? prev.filter((item) => item !== itemName)
-        : [...prev, itemName],
+        : [...prev, itemName]
     );
   };
 
   const isItemActive = (href: string) => {
-    return (
-      location.pathname === href || location.pathname.startsWith(href + "/")
-    );
+    return location.pathname === href || location.pathname.startsWith(href + "/");
   };
 
   const isItemExpanded = (itemName: string) => {
@@ -212,22 +201,36 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                     : "text-gray-700 hover:text-gray-900",
                 )}
               >
-                <Link
-                  to={item.href}
-                  className={cn(
-                    "flex items-center flex-1 px-3 py-2.5 text-sm font-medium transition-colors",
-                    isCollapsed && "justify-center",
-                  )}
-                >
+                {item.href === "#" ? (
+                  <div
+                    className={cn(
+                      "flex items-center flex-1 px-3 py-2.5 text-sm font-medium transition-colors cursor-pointer",
+                      isCollapsed && "justify-center",
+                    )}
+                    onClick={() => hasSubItems && toggleExpanded(item.name)}
+                  >
+                ) : (
+                  <Link
+                    to={item.href}
+                    className={cn(
+                      "flex items-center flex-1 px-3 py-2.5 text-sm font-medium transition-colors",
+                      isCollapsed && "justify-center",
+                    )}
+                  >
+                )}
                   <item.icon
                     className={cn(
                       "w-5 h-5",
                       !isCollapsed && "mr-3",
-                      isActive ? "text-primary" : "text-gray-500",
+                      isActive ? "text-primary" : "text-gray-500"
                     )}
                   />
                   {!isCollapsed && <span>{item.name}</span>}
-                </Link>
+                {item.href === "#" ? (
+                  </div>
+                ) : (
+                  </Link>
+                )}
                 {hasSubItems && !isCollapsed && (
                   <button
                     onClick={() => toggleExpanded(item.name)}
@@ -295,9 +298,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 isCollapsed && "justify-center",
               )}
             >
-              <Settings
-                className={cn("w-5 h-5 text-gray-500", !isCollapsed && "mr-3")}
-              />
+              <Settings className={cn("w-5 h-5 text-gray-500", !isCollapsed && "mr-3")} />
               {!isCollapsed && <span>Settings</span>}
             </Link>
             {!isCollapsed && (
@@ -318,37 +319,13 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           {!isCollapsed && isItemExpanded("Settings") && (
             <div className="ml-6 space-y-1">
               {[
-                {
-                  name: "Email Configuration",
-                  href: "/settings/email",
-                  icon: Mail,
-                },
-                {
-                  name: "WhatsApp Configuration",
-                  href: "/settings/whatsapp",
-                  icon: MessageCircle,
-                },
-                {
-                  name: "SMS Configuration",
-                  href: "/settings/sms",
-                  icon: Phone,
-                },
-                {
-                  name: "Security Settings",
-                  href: "/settings/security",
-                  icon: Lock,
-                },
+                { name: "Email Configuration", href: "/settings/email", icon: Mail },
+                { name: "WhatsApp Configuration", href: "/settings/whatsapp", icon: MessageCircle },
+                { name: "SMS Configuration", href: "/settings/sms", icon: Phone },
+                { name: "Security Settings", href: "/settings/security", icon: Lock },
                 { name: "API Keys", href: "/settings/api", icon: Key },
-                {
-                  name: "Backup & Restore",
-                  href: "/settings/backup",
-                  icon: RotateCcw,
-                },
-                {
-                  name: "System Preferences",
-                  href: "/settings/system",
-                  icon: Settings,
-                },
+                { name: "Backup & Restore", href: "/settings/backup", icon: RotateCcw },
+                { name: "System Preferences", href: "/settings/system", icon: Settings },
               ].map((subItem) => {
                 const isSubActive = location.pathname === subItem.href;
                 return (

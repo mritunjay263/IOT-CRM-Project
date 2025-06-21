@@ -7,6 +7,8 @@ import { DashboardLayout } from "./components/layout/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import Clients from "./pages/Clients";
 import AddClient from "./pages/AddClient";
+import Devices from "./pages/Devices";
+import AddDevices from "./pages/AddDevices";
 import Tasks from "./pages/Tasks";
 import Email from "./pages/Email";
 import Contacts from "./pages/Contacts";
@@ -45,6 +47,22 @@ const App = () => (
             element={
               <DashboardLayout>
                 <AddClient />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/devices"
+            element={
+              <DashboardLayout>
+                <Devices />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/devices/add"
+            element={
+              <DashboardLayout>
+                <AddDevices />
               </DashboardLayout>
             }
           />
