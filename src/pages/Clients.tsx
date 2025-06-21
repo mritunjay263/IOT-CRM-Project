@@ -96,6 +96,8 @@ const clientsData: Client[] = [
 export default function Clients() {
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const toggleRowExpansion = (clientId: string) => {
     const newExpanded = new Set(expandedRows);
@@ -125,6 +127,26 @@ export default function Clients() {
       client.clientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       client.clientId.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredClients.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedClients = filteredClients.slice(startIndex, endIndex);
+
+  // Reset to first page when search changes
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleItemsPerPageChange = (items: number) => {
+    setItemsPerPage(items);
+    setCurrentPage(1);
+  };
 
   const handleAction = (action: string, clientId: string) => {
     console.log(`${action} action for client ${clientId}`);
@@ -196,7 +218,7 @@ export default function Clients() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredClients.map((client) => (
+                {paginatedClients.map((client) => (
                   <React.Fragment key={client.clientId}>
                     {/* Main Row */}
                     <tr className="hover:bg-gray-50 transition-colors">
@@ -357,6 +379,86 @@ export default function Clients() {
               <p className="text-gray-500">
                 No clients found matching your search.
               </p>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {filteredClients.length > 0 && (
+            <div className="bg-white border-t border-gray-200 px-6 py-4">
+              <div className="flex items-center justify-between">
+                {/* Results info */}
+                <div className="text-sm text-gray-700">
+                  Showing <span className="font-medium">{startIndex + 1}</span>{" "}
+                  to{" "}
+                  <span className="font-medium">
+                    {Math.min(endIndex, filteredClients.length)}
+                  </span>{" "}
+                  of{" "}
+                  <span className="font-medium">{filteredClients.length}</span>{" "}
+                  results
+                </div>
+
+                {/* Pagination controls */}
+                <div className="flex items-center space-x-4">
+                  {/* Items per page */}
+                  <div className="flex items-center space-x-2">
+                    <label className="text-sm text-gray-700">Show:</label>
+                    <select
+                      value={itemsPerPage}
+                      onChange={(e) =>
+                        handleItemsPerPageChange(Number(e.target.value))
+                      }
+                      className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    >
+                      <option value={5}>5</option>
+                      <option value={10}>10</option>
+                      <option value={20}>20</option>
+                      <option value={50}>50</option>
+                    </select>
+                  </div>
+
+                  {/* Page navigation */}
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Previous
+                    </button>
+
+                    {/* Page numbers */}
+                    <div className="flex space-x-1">
+                      {Array.from({ length: totalPages }, (_, i) => i + 1)
+                        .slice(
+                          Math.max(0, currentPage - 3),
+                          Math.min(totalPages, currentPage + 2),
+                        )
+                        .map((page) => (
+                          <button
+                            key={page}
+                            onClick={() => handlePageChange(page)}
+                            className={`px-3 py-1 text-sm border rounded-md ${
+                              page === currentPage
+                                ? "bg-primary text-white border-primary"
+                                : "border-gray-300 hover:bg-gray-50"
+                            }`}
+                          >
+                            {page}
+                          </button>
+                        ))}
+                    </div>
+
+                    <button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </CardContent>
