@@ -174,6 +174,7 @@ export default function Clients() {
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12"></th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Client ID
                   </th>
@@ -192,7 +193,6 @@ export default function Clients() {
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-12"></th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -200,6 +200,18 @@ export default function Clients() {
                   <React.Fragment key={client.clientId}>
                     {/* Main Row */}
                     <tr className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-center">
+                        <button
+                          onClick={() => toggleRowExpansion(client.clientId)}
+                          className="p-1 hover:bg-gray-100 rounded transition-colors"
+                        >
+                          {expandedRows.has(client.clientId) ? (
+                            <ChevronDown className="w-4 h-4 text-gray-500" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4 text-gray-500" />
+                          )}
+                        </button>
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {client.clientId}
                       </td>
@@ -261,18 +273,6 @@ export default function Clients() {
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center">
-                        <button
-                          onClick={() => toggleRowExpansion(client.clientId)}
-                          className="p-1 hover:bg-gray-100 rounded transition-colors"
-                        >
-                          {expandedRows.has(client.clientId) ? (
-                            <ChevronDown className="w-4 h-4 text-gray-500" />
-                          ) : (
-                            <ChevronRight className="w-4 h-4 text-gray-500" />
-                          )}
-                        </button>
                       </td>
                     </tr>
 
@@ -361,87 +361,6 @@ export default function Clients() {
           )}
         </CardContent>
       </Card>
-
-      {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="bg-white border border-gray-200 shadow-sm">
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-600">
-                  Total Clients
-                </p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {clientsData.length}
-                </p>
-              </div>
-              <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white border border-gray-200 shadow-sm">
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-600">
-                  Active Clients
-                </p>
-                <p className="text-2xl font-bold text-green-600">
-                  {clientsData.filter((c) => c.status === "Active").length}
-                </p>
-              </div>
-              <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white border border-gray-200 shadow-sm">
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-600">
-                  Total Devices
-                </p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {clientsData.reduce(
-                    (sum, client) => sum + client.allDevices,
-                    0,
-                  )}
-                </p>
-              </div>
-              <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-purple-500 rounded-full"></div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white border border-gray-200 shadow-sm">
-          <CardContent className="p-6">
-            <div className="flex items-center">
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-600">
-                  Inactive Devices
-                </p>
-                <p className="text-2xl font-bold text-red-600">
-                  {clientsData.reduce(
-                    (sum, client) => sum + client.inactiveDevices,
-                    0,
-                  )}
-                </p>
-              </div>
-              <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 }
