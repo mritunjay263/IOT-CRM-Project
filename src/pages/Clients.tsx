@@ -230,13 +230,15 @@ export default function Clients() {
                       <td className="px-6 py-4 whitespace-nowrap text-center">
                         <button
                           onClick={() => toggleRowExpansion(client.clientId)}
-                          className="p-1 hover:bg-gray-100 rounded transition-colors"
+                          className="p-2 hover:bg-gray-100 rounded-full transition-all duration-200 hover:scale-110 active:scale-95"
                         >
-                          {expandedRows.has(client.clientId) ? (
-                            <ChevronDown className="w-4 h-4 text-gray-500" />
-                          ) : (
-                            <ChevronRight className="w-4 h-4 text-gray-500" />
-                          )}
+                          <div className="transition-transform duration-300 ease-in-out">
+                            {expandedRows.has(client.clientId) ? (
+                              <ChevronDown className="w-4 h-4 text-gray-500 transition-all duration-200" />
+                            ) : (
+                              <ChevronRight className="w-4 h-4 text-gray-500 transition-all duration-200" />
+                            )}
+                          </div>
                         </button>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -305,66 +307,78 @@ export default function Clients() {
 
                     {/* Expanded Row */}
                     {expandedRows.has(client.clientId) && (
-                      <tr className="bg-gray-50">
-                        <td colSpan={7} className="px-6 py-4">
-                          <div className="bg-white p-4 rounded-lg border border-gray-200">
-                            <h4 className="text-sm font-medium text-gray-900 mb-3">
-                              Client Details
-                            </h4>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                              <div>
-                                <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
-                                  Address
-                                </label>
-                                <p className="text-sm text-gray-900">
-                                  {client.address}
-                                </p>
-                              </div>
-                              <div>
-                                <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
-                                  License ID
-                                </label>
-                                <p className="text-sm text-gray-900 font-mono">
-                                  {client.licenseId}
-                                </p>
-                              </div>
-                              <div>
-                                <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
-                                  Email
-                                </label>
-                                <p className="text-sm text-primary">
-                                  {client.email}
-                                </p>
-                              </div>
-                              <div>
-                                <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
-                                  Phone
-                                </label>
-                                <p className="text-sm text-gray-900">
-                                  {client.phone}
-                                </p>
-                              </div>
-                              <div>
-                                <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
-                                  Join Date
-                                </label>
-                                <p className="text-sm text-gray-900">
-                                  {client.joinDate}
-                                </p>
-                              </div>
-                              <div>
-                                <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
-                                  Device Ratio
-                                </label>
-                                <div className="flex items-center space-x-2">
-                                  <span className="text-sm text-green-600 font-medium">
-                                    {client.allDevices - client.inactiveDevices}{" "}
-                                    Active
-                                  </span>
-                                  <span className="text-gray-400">|</span>
-                                  <span className="text-sm text-red-600 font-medium">
-                                    {client.inactiveDevices} Inactive
-                                  </span>
+                      <tr className="bg-gray-50 animate-in slide-in-from-top-2 duration-300">
+                        <td colSpan={7} className="px-6 py-0">
+                          <div className="overflow-hidden">
+                            <div className="bg-white p-4 rounded-lg border border-gray-200 my-4 transform transition-all duration-300 ease-out animate-in slide-in-from-top-4 fade-in">
+                              <h4 className="text-sm font-medium text-gray-900 mb-3 animate-in slide-in-from-left-2 duration-300 delay-100">
+                                Client Details
+                              </h4>
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {[
+                                  {
+                                    label: "Address",
+                                    value: client.address,
+                                    delay: "delay-150",
+                                  },
+                                  {
+                                    label: "License ID",
+                                    value: client.licenseId,
+                                    className: "font-mono",
+                                    delay: "delay-200",
+                                  },
+                                  {
+                                    label: "Email",
+                                    value: client.email,
+                                    className: "text-primary",
+                                    delay: "delay-250",
+                                  },
+                                  {
+                                    label: "Phone",
+                                    value: client.phone,
+                                    delay: "delay-300",
+                                  },
+                                  {
+                                    label: "Join Date",
+                                    value: client.joinDate,
+                                    delay: "delay-350",
+                                  },
+                                ].map((field, index) => (
+                                  <div
+                                    key={field.label}
+                                    className={cn(
+                                      "animate-in slide-in-from-bottom-4 fade-in duration-300",
+                                      field.delay,
+                                    )}
+                                  >
+                                    <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
+                                      {field.label}
+                                    </label>
+                                    <p
+                                      className={cn(
+                                        "text-sm text-gray-900",
+                                        field.className,
+                                      )}
+                                    >
+                                      {field.value}
+                                    </p>
+                                  </div>
+                                ))}
+                                <div className="animate-in slide-in-from-bottom-4 fade-in duration-300 delay-400">
+                                  <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
+                                    Device Ratio
+                                  </label>
+                                  <div className="flex items-center space-x-2">
+                                    <span className="text-sm text-green-600 font-medium transition-all duration-200 hover:scale-105">
+                                      {client.allDevices -
+                                        client.inactiveDevices}{" "}
+                                      Active
+                                    </span>
+                                    <span className="text-gray-400">|</span>
+                                    <span className="text-sm text-red-600 font-medium transition-all duration-200 hover:scale-105">
+                                      {client.inactiveDevices} Inactive
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
