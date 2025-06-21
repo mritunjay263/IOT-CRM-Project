@@ -120,12 +120,14 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
     setExpandedItems((prev) =>
       prev.includes(itemName)
         ? prev.filter((item) => item !== itemName)
-        : [...prev, itemName]
+        : [...prev, itemName],
     );
   };
 
   const isItemActive = (href: string) => {
-    return location.pathname === href || location.pathname.startsWith(href + "/");
+    return (
+      location.pathname === href || location.pathname.startsWith(href + "/")
+    );
   };
 
   const isItemExpanded = (itemName: string) => {
@@ -209,6 +211,15 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                     )}
                     onClick={() => hasSubItems && toggleExpanded(item.name)}
                   >
+                    <item.icon
+                      className={cn(
+                        "w-5 h-5",
+                        !isCollapsed && "mr-3",
+                        isActive ? "text-primary" : "text-gray-500",
+                      )}
+                    />
+                    {!isCollapsed && <span>{item.name}</span>}
+                  </div>
                 ) : (
                   <Link
                     to={item.href}
@@ -217,18 +228,14 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                       isCollapsed && "justify-center",
                     )}
                   >
-                )}
-                  <item.icon
-                    className={cn(
-                      "w-5 h-5",
-                      !isCollapsed && "mr-3",
-                      isActive ? "text-primary" : "text-gray-500"
-                    )}
-                  />
-                  {!isCollapsed && <span>{item.name}</span>}
-                {item.href === "#" ? (
-                  </div>
-                ) : (
+                    <item.icon
+                      className={cn(
+                        "w-5 h-5",
+                        !isCollapsed && "mr-3",
+                        isActive ? "text-primary" : "text-gray-500",
+                      )}
+                    />
+                    {!isCollapsed && <span>{item.name}</span>}
                   </Link>
                 )}
                 {hasSubItems && !isCollapsed && (
@@ -298,7 +305,9 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 isCollapsed && "justify-center",
               )}
             >
-              <Settings className={cn("w-5 h-5 text-gray-500", !isCollapsed && "mr-3")} />
+              <Settings
+                className={cn("w-5 h-5 text-gray-500", !isCollapsed && "mr-3")}
+              />
               {!isCollapsed && <span>Settings</span>}
             </Link>
             {!isCollapsed && (
@@ -319,13 +328,37 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           {!isCollapsed && isItemExpanded("Settings") && (
             <div className="ml-6 space-y-1">
               {[
-                { name: "Email Configuration", href: "/settings/email", icon: Mail },
-                { name: "WhatsApp Configuration", href: "/settings/whatsapp", icon: MessageCircle },
-                { name: "SMS Configuration", href: "/settings/sms", icon: Phone },
-                { name: "Security Settings", href: "/settings/security", icon: Lock },
+                {
+                  name: "Email Configuration",
+                  href: "/settings/email",
+                  icon: Mail,
+                },
+                {
+                  name: "WhatsApp Configuration",
+                  href: "/settings/whatsapp",
+                  icon: MessageCircle,
+                },
+                {
+                  name: "SMS Configuration",
+                  href: "/settings/sms",
+                  icon: Phone,
+                },
+                {
+                  name: "Security Settings",
+                  href: "/settings/security",
+                  icon: Lock,
+                },
                 { name: "API Keys", href: "/settings/api", icon: Key },
-                { name: "Backup & Restore", href: "/settings/backup", icon: RotateCcw },
-                { name: "System Preferences", href: "/settings/system", icon: Settings },
+                {
+                  name: "Backup & Restore",
+                  href: "/settings/backup",
+                  icon: RotateCcw,
+                },
+                {
+                  name: "System Preferences",
+                  href: "/settings/system",
+                  icon: Settings,
+                },
               ].map((subItem) => {
                 const isSubActive = location.pathname === subItem.href;
                 return (
