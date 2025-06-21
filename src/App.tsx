@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DashboardLayout } from "./components/layout/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import Clients from "./pages/Clients";
+import AddClient from "./pages/AddClient";
 import Tasks from "./pages/Tasks";
 import Email from "./pages/Email";
 import Contacts from "./pages/Contacts";
@@ -36,6 +37,14 @@ const App = () => (
             element={
               <DashboardLayout>
                 <Clients />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/clients/add"
+            element={
+              <DashboardLayout>
+                <AddClient />
               </DashboardLayout>
             }
           />

@@ -55,6 +55,14 @@ const navigationItems: NavigationItem[] = [
     name: "Clients",
     href: "/clients",
     icon: Users,
+    subItems: [
+      {
+        name: "Add Client",
+        href: "/clients/add",
+        icon: UserPlus,
+        color: "text-primary",
+      },
+    ],
   },
   {
     name: "Devices",
@@ -111,7 +119,10 @@ const navigationItems: NavigationItem[] = [
 
 export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   const location = useLocation();
-  const [expandedItems, setExpandedItems] = useState<string[]>(["Devices"]);
+  const [expandedItems, setExpandedItems] = useState<string[]>([
+    "Clients",
+    "Devices",
+  ]);
 
   const toggleExpanded = (itemName: string) => {
     if (isCollapsed) return;

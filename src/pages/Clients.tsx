@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -94,6 +95,7 @@ const clientsData: Client[] = [
 ];
 
 export default function Clients() {
+  const navigate = useNavigate();
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -163,7 +165,10 @@ export default function Clients() {
             Manage and monitor all your IoT clients
           </p>
         </div>
-        <Button className="bg-primary hover:bg-primary/90">
+        <Button
+          className="bg-primary hover:bg-primary/90"
+          onClick={() => navigate("/clients/add")}
+        >
           <Plus className="w-4 h-4 mr-2" />
           Add Client
         </Button>
