@@ -120,12 +120,14 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
     setExpandedItems((prev) =>
       prev.includes(itemName)
         ? prev.filter((item) => item !== itemName)
-        : [...prev, itemName]
+        : [...prev, itemName],
     );
   };
 
   const isItemActive = (href: string) => {
-    return location.pathname === href || location.pathname.startsWith(href + "/");
+    return (
+      location.pathname === href || location.pathname.startsWith(href + "/")
+    );
   };
 
   const isItemExpanded = (itemName: string) => {
@@ -192,54 +194,36 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
 
           return (
             <div key={item.name} className="space-y-1">
-              {/* Sub Items */}
-              {hasSubItems && !isCollapsed && (
-                <div
-                  className={cn(
-                    "ml-6 overflow-hidden transition-all duration-300 ease-in-out",
-                    isExpanded
-                      ? "max-h-96 opacity-100"
-                      : "max-h-0 opacity-0"
-                  )}
-                >
-                  <div className="space-y-1 py-1">
-                    {item.subItems?.map((subItem, index) => {
-                      const isSubActive = location.pathname === subItem.href;
-                      return (
-                        <Link
-                          key={subItem.name}
-                          to={subItem.href}
-                          className={cn(
-                            "flex items-center px-3 py-2 text-sm rounded-md transition-all duration-200 ease-in-out transform",
-                            isSubActive
-                              ? "text-primary font-medium bg-primary/5 translate-x-1"
-                              : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 hover:translate-x-1",
-                            isExpanded
-                              ? "translate-y-0 opacity-100"
-                              : "translate-y-2 opacity-0"
-                          )}
-                          style={{
-                            transitionDelay: isExpanded ? `${index * 50}ms` : "0ms",
-                          }}
-                        >
-                          {subItem.icon && (
-                            <subItem.icon
-                              className={cn(
-                                "w-3 h-3 mr-3 transition-transform duration-200",
-                                subItem.color || "text-gray-400",
-                                isSubActive && "scale-110"
-                              )}
-                            />
-                          )}
-                          <span className="transition-all duration-200">
-                            {subItem.name}
-                          </span>
-                        </Link>
-                      );
-                    })}
+              {/* Main Item */}
+              <div
+                className={cn(
+                  "flex items-center justify-between group transition-all duration-200",
+                  isActive
+                    ? "text-primary"
+                    : "text-gray-700 hover:text-gray-900",
+                )}
+              >
+                {item.href === "#" ? (
+                  <div
+                    className={cn(
+                      "flex items-center flex-1 px-3 py-2.5 text-sm font-medium transition-colors cursor-pointer",
+                      isCollapsed && "justify-center",
+                    )}
+                    onClick={() => hasSubItems && toggleExpanded(item.name)}
+                  >
+                    <item.icon
+                      className={cn(
+                        "w-5 h-5",
+                        !isCollapsed && "mr-3",
+                        isActive ? "text-primary" : "text-gray-500",
+                      )}
+                    />
+                    {!isCollapsed && <span>{item.name}</span>}
                   </div>
-                </div>
-              )}
+                ) : (
+                  <Link
+                    to={item.href}
+                    className={cn(
                       "flex items-center flex-1 px-3 py-2.5 text-sm font-medium transition-colors",
                       isCollapsed && "justify-center",
                     )}
@@ -248,7 +232,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                       className={cn(
                         "w-5 h-5",
                         !isCollapsed && "mr-3",
-                        isActive ? "text-primary" : "text-gray-500"
+                        isActive ? "text-primary" : "text-gray-500",
                       )}
                     />
                     {!isCollapsed && <span>{item.name}</span>}
@@ -271,33 +255,51 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
               </div>
 
               {/* Sub Items */}
-              {hasSubItems && !isCollapsed && isExpanded && (
-                <div className="ml-6 space-y-1">
-                  {item.subItems?.map((subItem) => {
-                    const isSubActive = location.pathname === subItem.href;
-                    return (
-                      <Link
-                        key={subItem.name}
-                        to={subItem.href}
-                        className={cn(
-                          "flex items-center px-3 py-2 text-sm transition-colors",
-                          isSubActive
-                            ? "text-primary font-medium"
-                            : "text-gray-600 hover:text-gray-900",
-                        )}
-                      >
-                        {subItem.icon && (
-                          <subItem.icon
-                            className={cn(
-                              "w-3 h-3 mr-3 fill-current",
-                              subItem.color || "text-gray-400",
-                            )}
-                          />
-                        )}
-                        <span>{subItem.name}</span>
-                      </Link>
-                    );
-                  })}
+              {hasSubItems && !isCollapsed && (
+                <div
+                  className={cn(
+                    "ml-6 overflow-hidden transition-all duration-300 ease-in-out",
+                    isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
+                  )}
+                >
+                  <div className="space-y-1 py-1">
+                    {item.subItems?.map((subItem, index) => {
+                      const isSubActive = location.pathname === subItem.href;
+                      return (
+                        <Link
+                          key={subItem.name}
+                          to={subItem.href}
+                          className={cn(
+                            "flex items-center px-3 py-2 text-sm rounded-md transition-all duration-200 ease-in-out transform",
+                            isSubActive
+                              ? "text-primary font-medium bg-primary/5 translate-x-1"
+                              : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 hover:translate-x-1",
+                            isExpanded
+                              ? "translate-y-0 opacity-100"
+                              : "translate-y-2 opacity-0",
+                          )}
+                          style={{
+                            transitionDelay: isExpanded
+                              ? `${index * 50}ms`
+                              : "0ms",
+                          }}
+                        >
+                          {subItem.icon && (
+                            <subItem.icon
+                              className={cn(
+                                "w-3 h-3 mr-3 transition-transform duration-200",
+                                subItem.color || "text-gray-400",
+                                isSubActive && "scale-110",
+                              )}
+                            />
+                          )}
+                          <span className="transition-all duration-200">
+                            {subItem.name}
+                          </span>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>
@@ -323,7 +325,9 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 isCollapsed && "justify-center",
               )}
             >
-              <Settings className={cn("w-5 h-5 text-gray-500", !isCollapsed && "mr-3")} />
+              <Settings
+                className={cn("w-5 h-5 text-gray-500", !isCollapsed && "mr-3")}
+              />
               {!isCollapsed && <span>Settings</span>}
             </Link>
             {!isCollapsed && (
@@ -344,13 +348,37 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           {!isCollapsed && isItemExpanded("Settings") && (
             <div className="ml-6 space-y-1">
               {[
-                { name: "Email Configuration", href: "/settings/email", icon: Mail },
-                { name: "WhatsApp Configuration", href: "/settings/whatsapp", icon: MessageCircle },
-                { name: "SMS Configuration", href: "/settings/sms", icon: Phone },
-                { name: "Security Settings", href: "/settings/security", icon: Lock },
+                {
+                  name: "Email Configuration",
+                  href: "/settings/email",
+                  icon: Mail,
+                },
+                {
+                  name: "WhatsApp Configuration",
+                  href: "/settings/whatsapp",
+                  icon: MessageCircle,
+                },
+                {
+                  name: "SMS Configuration",
+                  href: "/settings/sms",
+                  icon: Phone,
+                },
+                {
+                  name: "Security Settings",
+                  href: "/settings/security",
+                  icon: Lock,
+                },
                 { name: "API Keys", href: "/settings/api", icon: Key },
-                { name: "Backup & Restore", href: "/settings/backup", icon: RotateCcw },
-                { name: "System Preferences", href: "/settings/system", icon: Settings },
+                {
+                  name: "Backup & Restore",
+                  href: "/settings/backup",
+                  icon: RotateCcw,
+                },
+                {
+                  name: "System Preferences",
+                  href: "/settings/system",
+                  icon: Settings,
+                },
               ].map((subItem) => {
                 const isSubActive = location.pathname === subItem.href;
                 return (
