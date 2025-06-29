@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DashboardLayout } from "./components/layout/DashboardLayout";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Clients from "./pages/Clients";
 import AddClient from "./pages/AddClient";
@@ -26,92 +28,115 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route
             path="/"
             element={
-              <DashboardLayout>
-                <Dashboard />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Dashboard />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/clients"
             element={
-              <DashboardLayout>
-                <Clients />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Clients />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/clients/add"
             element={
-              <DashboardLayout>
-                <AddClient />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <AddClient />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/devices"
             element={
-              <DashboardLayout>
-                <Devices />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Devices />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/devices/add"
             element={
-              <DashboardLayout>
-                <AddDevices />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <AddDevices />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/tasks"
             element={
-              <DashboardLayout>
-                <Tasks />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Tasks />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/email"
             element={
-              <DashboardLayout>
-                <Email />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Email />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/contacts"
             element={
-              <DashboardLayout>
-                <Contacts />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Contacts />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/chat"
             element={
-              <DashboardLayout>
-                <Chat />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Chat />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/deals"
             element={
-              <DashboardLayout>
-                <Deals />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Deals />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/settings"
             element={
-              <DashboardLayout>
-                <Settings />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Settings />
+                </DashboardLayout>
+              </ProtectedRoute>
             }
           />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -1,10 +1,25 @@
 import React from "react";
-import { Search, Bell } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Search, Bell, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function Header() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("userEmail");
+    navigate("/login");
+  };
+
   return (
     <header className="flex items-center justify-between px-6 py-6 bg-white border-b border-gray-200 h-[73px]">
       {/* Search */}
@@ -30,14 +45,24 @@ export function Header() {
         </Button>
 
         {/* User Profile */}
-        <div className="flex items-center space-x-3">
-          <Avatar className="w-8 h-8">
-            <AvatarImage src="/placeholder.svg" alt="Mritunjay Pandey" />
-            <AvatarFallback className="bg-primary text-white text-sm">
-              MP
-            </AvatarFallback>
-          </Avatar>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="p-0 h-auto">
+              <Avatar className="w-8 h-8">
+                <AvatarImage src="/placeholder.svg" alt="Mritunjay Pandey" />
+                <AvatarFallback className="bg-primary text-white text-sm">
+                  MP
+                </AvatarFallback>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={handleLogout}>
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
