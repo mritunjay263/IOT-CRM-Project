@@ -305,8 +305,8 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
         })}
       </nav>
 
-      {/* Settings */}
-      <div className="p-4 border-t border-gray-200">
+      {/* Settings - Fixed at bottom */}
+      <div className="mt-auto p-4 border-t border-gray-200">
         <div className="space-y-1">
           <div
             className={cn(
@@ -383,19 +383,6 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           )}
         </div>
       </div>
-
-      {/* Toggle Sidebar Button */}
-      {!isCollapsed && (
-        <div className="p-4 border-t border-gray-200">
-          <button
-            onClick={onToggle}
-            className="flex items-center w-full px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors rounded-lg hover:bg-gray-50"
-          >
-            <ChevronLeft className="w-4 h-4 mr-2" />
-            <span>Toggle sidebar</span>
-          </button>
-        </div>
-      )}
     </div>
   );
 }
