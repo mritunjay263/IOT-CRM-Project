@@ -78,6 +78,8 @@ export function EnhancedDealsChart() {
                 type="category"
                 orientation="bottom"
                 height={30}
+                interval={0}
+                allowDuplicatedCategory={false}
               />
               <YAxis
                 axisLine={false}
@@ -88,6 +90,8 @@ export function EnhancedDealsChart() {
                 type="number"
                 orientation="left"
                 width={40}
+                allowDecimals={false}
+                allowDuplicatedCategory={false}
               />
               <Tooltip content={<CustomTooltip />} />
               <Area
