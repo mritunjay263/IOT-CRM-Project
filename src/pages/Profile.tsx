@@ -23,7 +23,8 @@ export default function Profile() {
     email: "mritunjay.mailme@gmail.com",
     phone: "",
     address: "",
-    profilePicture: "",
+    profilePicture:
+      "https://lh3.googleusercontent.com/a/ACg8ocLkj7ej_c9Fy4zmOS02ex7JYWSAhcAfQs420cT-Z47VUHOE8S4L=s576-c-no",
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -158,7 +159,10 @@ export default function Profile() {
             <div className="relative">
               <Avatar className="w-20 h-20">
                 <AvatarImage
-                  src={profileData.profilePicture || "/placeholder.svg"}
+                  src={
+                    profileData.profilePicture ||
+                    "https://lh3.googleusercontent.com/a/ACg8ocLkj7ej_c9Fy4zmOS02ex7JYWSAhcAfQs420cT-Z47VUHOE8S4L=s576-c-no"
+                  }
                   alt={profileData.name}
                 />
                 <AvatarFallback className="bg-primary text-white text-xl">

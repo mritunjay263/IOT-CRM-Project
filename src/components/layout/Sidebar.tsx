@@ -162,7 +162,10 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       <div className="p-6 border-b border-gray-200 flex-shrink-0">
         <div className="flex items-center space-x-3">
           <Avatar className="w-10 h-10">
-            <AvatarImage src="/placeholder.svg" alt="Mritunjay Pandey" />
+            <AvatarImage
+              src="https://lh3.googleusercontent.com/a/ACg8ocLkj7ej_c9Fy4zmOS02ex7JYWSAhcAfQs420cT-Z47VUHOE8S4L=s576-c-no"
+              alt="Mritunjay Pandey"
+            />
             <AvatarFallback className="bg-primary text-white">
               MP
             </AvatarFallback>

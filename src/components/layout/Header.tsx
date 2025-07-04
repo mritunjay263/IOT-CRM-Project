@@ -49,7 +49,10 @@ export function Header() {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="p-0 h-auto">
               <Avatar className="w-8 h-8">
-                <AvatarImage src="/placeholder.svg" alt="Mritunjay Pandey" />
+                <AvatarImage
+                  src="https://lh3.googleusercontent.com/a/ACg8ocLkj7ej_c9Fy4zmOS02ex7JYWSAhcAfQs420cT-Z47VUHOE8S4L=s576-c-no"
+                  alt="Mritunjay Pandey"
+                />
                 <AvatarFallback className="bg-primary text-white text-sm">
                   MP
                 </AvatarFallback>
