@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../auth/AuthProvider';
 import { Search, Bell, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
@@ -12,13 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function Header() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("userEmail");
-    navigate("/login");
-  };
+  const { logout } = useAuth();
 
   return (
     <header className="flex items-center justify-between px-6 py-6 bg-white border-b border-gray-200 h-[73px]">
@@ -57,7 +51,7 @@ export function Header() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={logout}>
               <LogOut className="w-4 h-4 mr-2" />
               Logout
             </DropdownMenuItem>
