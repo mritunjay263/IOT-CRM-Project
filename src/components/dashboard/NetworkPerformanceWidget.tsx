@@ -70,12 +70,18 @@ export function NetworkPerformanceWidget() {
                 axisLine={false}
                 tickLine={false}
                 tick={{ fontSize: 12, fill: "#6B7280" }}
+                type="category"
+                orientation="bottom"
+                height={30}
               />
               <YAxis
                 axisLine={false}
                 tickLine={false}
                 tick={{ fontSize: 12, fill: "#6B7280" }}
                 domain={[0, 80]}
+                type="number"
+                orientation="left"
+                width={40}
               />
               <Tooltip content={<CustomTooltip />} />
               <Line

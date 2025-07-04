@@ -75,6 +75,9 @@ export function EnhancedDealsChart() {
                 axisLine={false}
                 tickLine={false}
                 tick={{ fontSize: 12, fill: "#6B7280" }}
+                type="category"
+                orientation="bottom"
+                height={30}
               />
               <YAxis
                 axisLine={false}
@@ -82,6 +85,9 @@ export function EnhancedDealsChart() {
                 tick={{ fontSize: 12, fill: "#6B7280" }}
                 domain={[0, 200]}
                 ticks={[0, 50, 100, 150, 200]}
+                type="number"
+                orientation="left"
+                width={40}
               />
               <Tooltip content={<CustomTooltip />} />
               <Area
