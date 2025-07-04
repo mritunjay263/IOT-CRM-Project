@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -55,6 +56,8 @@ const activities = [
 ];
 
 export function TaskList() {
+  const navigate = useNavigate();
+
   return (
     <Card className="bg-white border border-gray-200 shadow-sm h-80 w-full">
       <CardContent className="p-6 h-full flex flex-col">
@@ -110,7 +113,10 @@ export function TaskList() {
           ))}
         </div>
         <div className="pt-4 border-t border-gray-100">
-          <button className="text-sm text-primary hover:underline">
+          <button
+            onClick={() => navigate("/notifications")}
+            className="text-sm text-primary hover:underline"
+          >
             Show more
           </button>
         </div>
