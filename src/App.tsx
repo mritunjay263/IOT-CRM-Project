@@ -14,6 +14,7 @@ import AddDevices from "./pages/AddDevices";
 import Licenses from "./pages/Licenses";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
+import Analytics from "./pages/Analytics";
 import Tasks from "./pages/Tasks";
 import Email from "./pages/Email";
 import Contacts from "./pages/Contacts";
@@ -88,6 +89,16 @@ const App = () => (
               <ProtectedRoute>
                 <DashboardLayout>
                   <Licenses />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Analytics />
                 </DashboardLayout>
               </ProtectedRoute>
             }
