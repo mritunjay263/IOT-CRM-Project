@@ -104,11 +104,6 @@ const navigationItems: NavigationItem[] = [
     href: "/notifications",
     icon: Bell,
   },
-  {
-    name: "Data Monitoring",
-    href: "/monitoring",
-    icon: Database,
-  },
 ];
 
 export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
@@ -362,22 +357,6 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                   name: "SMS Configuration",
                   href: "/settings/sms",
                   icon: Phone,
-                },
-                {
-                  name: "Security Settings",
-                  href: "/settings/security",
-                  icon: Lock,
-                },
-                { name: "API Keys", href: "/settings/api", icon: Key },
-                {
-                  name: "Backup & Restore",
-                  href: "/settings/backup",
-                  icon: RotateCcw,
-                },
-                {
-                  name: "System Preferences",
-                  href: "/settings/system",
-                  icon: Settings,
                 },
               ].map((subItem) => {
                 const isSubActive = location.pathname === subItem.href;

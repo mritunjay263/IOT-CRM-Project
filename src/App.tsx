@@ -11,6 +11,7 @@ import Clients from "./pages/Clients";
 import AddClient from "./pages/AddClient";
 import Devices from "./pages/Devices";
 import AddDevices from "./pages/AddDevices";
+import Profile from "./pages/Profile";
 import Tasks from "./pages/Tasks";
 import Email from "./pages/Email";
 import Contacts from "./pages/Contacts";
@@ -75,6 +76,16 @@ const App = () => (
               <ProtectedRoute>
                 <DashboardLayout>
                   <AddDevices />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Profile />
                 </DashboardLayout>
               </ProtectedRoute>
             }
