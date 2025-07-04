@@ -20,6 +20,31 @@ export function Header() {
     navigate("/login");
   };
 
+  // Sample notifications for dropdown
+  const notifications = [
+    {
+      id: 1,
+      title: "Device Offline Alert",
+      message: "Motion Detector C1 has gone offline",
+      time: "2 min ago",
+      type: "error",
+    },
+    {
+      id: 2,
+      title: "System Update",
+      message: "IoT Control Hub updated to v2.1.3",
+      time: "1 hour ago",
+      type: "success",
+    },
+    {
+      id: 3,
+      title: "Low Battery Warning",
+      message: "Temperature Sensor A1 battery below 15%",
+      time: "3 hours ago",
+      type: "warning",
+    },
+  ];
+
   return (
     <header className="flex items-center justify-between px-6 py-6 bg-white border-b border-gray-200 h-[73px]">
       {/* Search */}
@@ -37,12 +62,68 @@ export function Header() {
       {/* Right side */}
       <div className="flex items-center space-x-4">
         {/* Notifications */}
-        <Button variant="ghost" size="sm" className="relative p-2">
-          <Bell className="w-5 h-5 text-gray-500" />
-          <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center">
-            <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
-          </span>
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="relative p-2">
+              <Bell className="w-5 h-5 text-gray-500" />
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center">
+                <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+              </span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-80">
+            <div className="px-4 py-3 border-b border-gray-200">
+              <h3 className="text-sm font-medium text-gray-900">
+                Notifications
+              </h3>
+              <p className="text-xs text-gray-500">
+                You have {notifications.length} unread notifications
+              </p>
+            </div>
+            <div className="max-h-80 overflow-y-auto">
+              {notifications.map((notification) => (
+                <DropdownMenuItem
+                  key={notification.id}
+                  className="px-4 py-3 hover:bg-gray-50 cursor-pointer"
+                  onClick={() => navigate("/notifications")}
+                >
+                  <div className="flex items-start space-x-3 w-full">
+                    <div
+                      className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                        notification.type === "error"
+                          ? "bg-red-500"
+                          : notification.type === "warning"
+                            ? "bg-yellow-500"
+                            : "bg-green-500"
+                      }`}
+                    ></div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {notification.title}
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">
+                        {notification.message}
+                      </p>
+                      <p className="text-xs text-gray-400 mt-1">
+                        {notification.time}
+                      </p>
+                    </div>
+                  </div>
+                </DropdownMenuItem>
+              ))}
+            </div>
+            <div className="px-4 py-3 border-t border-gray-200">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full text-primary hover:bg-primary/10"
+                onClick={() => navigate("/notifications")}
+              >
+                View All Notifications
+              </Button>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         {/* User Profile */}
         <DropdownMenu>
