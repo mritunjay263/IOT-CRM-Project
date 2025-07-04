@@ -12,6 +12,7 @@ import AddClient from "./pages/AddClient";
 import Devices from "./pages/Devices";
 import AddDevices from "./pages/AddDevices";
 import Profile from "./pages/Profile";
+import Notifications from "./pages/Notifications";
 import Tasks from "./pages/Tasks";
 import Email from "./pages/Email";
 import Contacts from "./pages/Contacts";
@@ -86,6 +87,16 @@ const App = () => (
               <ProtectedRoute>
                 <DashboardLayout>
                   <Profile />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Notifications />
                 </DashboardLayout>
               </ProtectedRoute>
             }
