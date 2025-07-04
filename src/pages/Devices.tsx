@@ -18,7 +18,7 @@ interface Device {
   clientName: string;
   deviceId: string;
   deviceName: string;
-  status: "Online" | "Offline" | "Maintenance";
+  status: "Active" | "Inactive";
   location: string;
   lastSeen: string;
 }
@@ -29,7 +29,7 @@ const devicesData: Device[] = [
     clientName: "TechCorp Industries",
     deviceId: "DEV-001",
     deviceName: "Temperature Sensor A1",
-    status: "Online",
+    status: "Active",
     location: "Factory Floor A - Section 1",
     lastSeen: "2 minutes ago",
   },
@@ -38,7 +38,7 @@ const devicesData: Device[] = [
     clientName: "TechCorp Industries",
     deviceId: "DEV-002",
     deviceName: "Humidity Monitor B2",
-    status: "Online",
+    status: "Active",
     location: "Factory Floor A - Section 2",
     lastSeen: "5 minutes ago",
   },
@@ -47,7 +47,7 @@ const devicesData: Device[] = [
     clientName: "Smart Manufacturing Ltd",
     deviceId: "DEV-003",
     deviceName: "Motion Detector C1",
-    status: "Offline",
+    status: "Inactive",
     location: "Warehouse B - Entrance",
     lastSeen: "2 hours ago",
   },
@@ -56,7 +56,7 @@ const devicesData: Device[] = [
     clientName: "Smart Manufacturing Ltd",
     deviceId: "DEV-004",
     deviceName: "Air Quality Monitor D1",
-    status: "Maintenance",
+    status: "Inactive",
     location: "Production Line 1",
     lastSeen: "30 minutes ago",
   },
@@ -65,7 +65,7 @@ const devicesData: Device[] = [
     clientName: "GreenEnergy Solutions",
     deviceId: "DEV-005",
     deviceName: "Pressure Gauge E1",
-    status: "Online",
+    status: "Active",
     location: "Solar Panel Array - Section A",
     lastSeen: "1 minute ago",
   },
@@ -74,7 +74,7 @@ const devicesData: Device[] = [
     clientName: "GreenEnergy Solutions",
     deviceId: "DEV-006",
     deviceName: "Vibration Sensor F1",
-    status: "Offline",
+    status: "Inactive",
     location: "Wind Turbine Tower 3",
     lastSeen: "1 day ago",
   },
@@ -83,7 +83,7 @@ const devicesData: Device[] = [
     clientName: "AutoTech Systems",
     deviceId: "DEV-007",
     deviceName: "GPS Tracker G1",
-    status: "Online",
+    status: "Active",
     location: "Vehicle Fleet - Unit 12",
     lastSeen: "Just now",
   },
@@ -125,12 +125,10 @@ export default function Devices() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Online":
+      case "Active":
         return "bg-green-100 text-green-800 hover:bg-green-100";
-      case "Offline":
+      case "Inactive":
         return "bg-red-100 text-red-800 hover:bg-red-100";
-      case "Maintenance":
-        return "bg-yellow-100 text-yellow-800 hover:bg-yellow-100";
       default:
         return "bg-gray-100 text-gray-800 hover:bg-gray-100";
     }
